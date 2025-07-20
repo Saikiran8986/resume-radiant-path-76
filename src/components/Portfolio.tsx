@@ -25,7 +25,7 @@ import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import { ThemeToggle } from './ThemeToggle';
 import { Navigation } from './Navigation';
-import { InteractiveBackground3D } from './InteractiveBackground3D';
+import { Background3D } from './Background3D';
 import { AnimatedCard } from './AnimatedCard';
 import { ScrollAnimatedSection, ScrollAnimatedDiv } from './ScrollAnimatedSection';
 import { PageTransition } from './PageTransition';
@@ -237,7 +237,7 @@ export const Portfolio = () => {
   return (
     <PageTransition>
       <div className="min-h-screen performance-optimized">
-        <InteractiveBackground3D />
+        <Background3D />
         <Navigation />
         <ThemeToggle />
       
