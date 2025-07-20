@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { motion, useAnimation, useInView } from 'framer-motion';
+import { useState } from 'react';
+import { motion, useAnimation } from 'framer-motion';
 import { useInView as useIntersectionObserver } from 'react-intersection-observer';
 import { 
   Github, 
@@ -25,6 +25,10 @@ import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import { ThemeToggle } from './ThemeToggle';
 import { Navigation } from './Navigation';
+import { Background3D } from './Background3D';
+import { AnimatedCard } from './AnimatedCard';
+import { ScrollAnimatedSection, ScrollAnimatedDiv } from './ScrollAnimatedSection';
+import { PageTransition } from './PageTransition';
 import profileAvatar from '../assets/profile-avatar.jpg';
 
 // Animation variants
@@ -46,34 +50,6 @@ const staggerContainer = {
 const scaleIn = {
   hidden: { scale: 0.9, opacity: 0 },
   visible: { scale: 1, opacity: 1, transition: { duration: 0.4 } }
-};
-
-// Animated Section Component
-const AnimatedSection = ({ children, className = "", id }: { children: React.ReactNode, className?: string, id?: string }) => {
-  const controls = useAnimation();
-  const [ref, inView] = useIntersectionObserver({
-    threshold: 0.1,
-    triggerOnce: true
-  });
-
-  useEffect(() => {
-    if (inView) {
-      controls.start("visible");
-    }
-  }, [controls, inView]);
-
-  return (
-    <motion.section
-      id={id}
-      ref={ref}
-      animate={controls}
-      initial="hidden"
-      variants={fadeInUp}
-      className={className}
-    >
-      {children}
-    </motion.section>
-  );
 };
 
 // Skill Progress Bar Component
@@ -259,13 +235,19 @@ export const Portfolio = () => {
   ];
 
   return (
-    <div className="min-h-screen">
-      <Navigation />
-      <ThemeToggle />
+    <PageTransition>
+      <div className="min-h-screen performance-optimized">
+        <Background3D />
+        <Navigation />
+        <ThemeToggle />
       
-      {/* Hero Section */}
-      <section id="hero" className="section-padding min-h-screen flex items-center justify-center relative overflow-hidden">
-        <div className="container-custom text-center">
+        {/* Hero Section */}
+        <ScrollAnimatedSection 
+          id="hero" 
+          className="section-padding min-h-screen flex items-center justify-center relative overflow-hidden z-10"
+          animation="fade"
+        >
+          <div className="container-custom text-center">
           <motion.div
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -324,24 +306,12 @@ export const Portfolio = () => {
               Download Resume
             </Button>
           </motion.div>
-        </div>
+          </div>
+        </ScrollAnimatedSection>
 
-        {/* Floating decorative elements */}
-        <motion.div
-          className="absolute top-20 left-10 w-20 h-20 bg-primary/10 rounded-full blur-xl"
-          animate={{ y: [0, -20, 0] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div
-          className="absolute bottom-20 right-10 w-32 h-32 bg-accent/10 rounded-full blur-xl"
-          animate={{ y: [0, 20, 0] }}
-          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-        />
-      </section>
-
-      {/* About Section */}
-      <AnimatedSection id="about" className="section-padding">
-        <div className="container-custom">
+        {/* About Section */}
+        <ScrollAnimatedSection id="about" className="section-padding" stagger>
+          <div className="container-custom">
           <motion.div
             variants={staggerContainer}
             initial="hidden"
@@ -359,12 +329,12 @@ export const Portfolio = () => {
               am always eager to learn new technologies that can help me build better solutions.
             </motion.p>
           </motion.div>
-        </div>
-      </AnimatedSection>
+          </div>
+        </ScrollAnimatedSection>
 
-      {/* Experience & Education Section */}
-      <AnimatedSection id="experience" className="section-padding bg-card/30">
-        <div className="container-custom">
+        {/* Experience & Education Section */}
+        <ScrollAnimatedSection id="experience" className="section-padding glass-card/30" stagger>
+          <div className="container-custom">
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Internships */}
             <motion.div
@@ -379,8 +349,7 @@ export const Portfolio = () => {
               </motion.h3>
               <div className="space-y-6">
                 {internships.map((internship, index) => (
-                  <motion.div key={index} variants={scaleIn}>
-                    <Card className="card-hover backdrop-blur-card">
+                  <AnimatedCard key={index} delay={index * 0.1}>
                       <CardHeader>
                         <CardTitle className="text-xl">{internship.role}</CardTitle>
                         <CardDescription className="flex items-center gap-2">
@@ -401,8 +370,7 @@ export const Portfolio = () => {
                           ))}
                         </ul>
                       </CardContent>
-                    </Card>
-                  </motion.div>
+                  </AnimatedCard>
                 ))}
               </div>
             </motion.div>
@@ -420,8 +388,7 @@ export const Portfolio = () => {
               </motion.h3>
               <div className="space-y-6">
                 {education.map((edu, index) => (
-                  <motion.div key={index} variants={scaleIn}>
-                    <Card className="card-hover backdrop-blur-card">
+                  <AnimatedCard key={index} delay={index * 0.1}>
                       <CardHeader>
                         <CardTitle className="text-xl">{edu.degree}</CardTitle>
                         <CardDescription className="flex flex-col gap-2">
@@ -435,18 +402,17 @@ export const Portfolio = () => {
                           </div>
                         </CardDescription>
                       </CardHeader>
-                    </Card>
-                  </motion.div>
+                  </AnimatedCard>
                 ))}
               </div>
             </motion.div>
           </div>
-        </div>
-      </AnimatedSection>
+          </div>
+        </ScrollAnimatedSection>
 
-      {/* Projects Section */}
-      <AnimatedSection id="projects" className="section-padding">
-        <div className="container-custom">
+        {/* Projects Section */}
+        <ScrollAnimatedSection id="projects" className="section-padding" stagger>
+          <div className="container-custom">
           <motion.div
             variants={staggerContainer}
             initial="hidden"
@@ -470,8 +436,7 @@ export const Portfolio = () => {
             className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
           >
             {projects.map((project, index) => (
-              <motion.div key={index} variants={scaleIn}>
-                <Card className="card-hover backdrop-blur-card overflow-hidden group">
+              <AnimatedCard key={index} delay={index * 0.15} className="overflow-hidden group">
                   <div className="relative overflow-hidden">
                     <img
                       src={project.image}
@@ -502,16 +467,15 @@ export const Portfolio = () => {
                       ))}
                     </div>
                   </CardContent>
-                </Card>
-              </motion.div>
+              </AnimatedCard>
             ))}
           </motion.div>
-        </div>
-      </AnimatedSection>
+          </div>
+        </ScrollAnimatedSection>
 
-      {/* Skills Section */}
-      <AnimatedSection id="skills" className="section-padding bg-card/30">
-        <div className="container-custom">
+        {/* Skills Section */}
+        <ScrollAnimatedSection id="skills" className="section-padding glass-card/30" stagger>
+          <div className="container-custom">
           <motion.div
             variants={staggerContainer}
             initial="hidden"
@@ -537,12 +501,12 @@ export const Portfolio = () => {
               />
             ))}
           </div>
-        </div>
-      </AnimatedSection>
+          </div>
+        </ScrollAnimatedSection>
 
-      {/* Certificates Section */}
-      <AnimatedSection className="section-padding">
-        <div className="container-custom">
+        {/* Certificates Section */}
+        <ScrollAnimatedSection className="section-padding" stagger>
+          <div className="container-custom">
           <motion.div
             variants={staggerContainer}
             initial="hidden"
@@ -566,8 +530,7 @@ export const Portfolio = () => {
             className="flex overflow-x-auto gap-6 pb-4 scrollbar-hide"
           >
             {certificates.map((cert, index) => (
-              <motion.div key={index} variants={scaleIn} className="flex-shrink-0">
-                <Card className="card-hover backdrop-blur-card w-80 overflow-hidden">
+              <AnimatedCard key={index} delay={index * 0.1} className="flex-shrink-0 w-80 overflow-hidden">
                   <div className="relative">
                     <img
                       src={cert.image}
@@ -584,16 +547,15 @@ export const Portfolio = () => {
                     <CardTitle className="text-lg">{cert.name}</CardTitle>
                     <CardDescription>Issued by {cert.issuer}</CardDescription>
                   </CardHeader>
-                </Card>
-              </motion.div>
+              </AnimatedCard>
             ))}
           </motion.div>
-        </div>
-      </AnimatedSection>
+          </div>
+        </ScrollAnimatedSection>
 
-      {/* Contact Section */}
-      <AnimatedSection id="contact" className="section-padding bg-card/30">
-        <div className="container-custom">
+        {/* Contact Section */}
+        <ScrollAnimatedSection id="contact" className="section-padding glass-card/30" stagger>
+          <div className="container-custom">
           <motion.div
             variants={staggerContainer}
             initial="hidden"
@@ -616,7 +578,7 @@ export const Portfolio = () => {
               whileInView="visible"
               viewport={{ once: true }}
             >
-              <Card className="backdrop-blur-card p-8">
+              <Card className="glass-card p-8">
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <FloatingLabelInput
                     label="Your Name"
@@ -711,8 +673,8 @@ export const Portfolio = () => {
               </div>
             </motion.div>
           </div>
-        </div>
-      </AnimatedSection>
+          </div>
+        </ScrollAnimatedSection>
 
       {/* Footer */}
       <footer className="section-padding bg-background/80 backdrop-blur-md border-t border-border">
@@ -730,8 +692,9 @@ export const Portfolio = () => {
               <ChevronUp className="h-4 w-4" />
             </Button>
           </div>
-        </div>
-      </footer>
-    </div>
+          </div>
+        </footer>
+      </div>
+    </PageTransition>
   );
 };
