@@ -8,21 +8,21 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Light theme - Soft whites and light grays */
+    /* Light theme - Improved contrast for better readability */
     --background: 0 0% 98%;
-    --foreground: 220 15% 20%;
+    --foreground: 0 0% 13%;  /* Dark gray #222 for better visibility */
 
     --card: 0 0% 100%;
-    --card-foreground: 220 15% 20%;
+    --card-foreground: 0 0% 13%;  /* Dark gray for better readability */
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 15% 20%;
+    --popover-foreground: 0 0% 13%;  /* Dark gray for consistency */
 
     --primary: 230 80% 60%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 210 30% 96%;
-    --secondary-foreground: 220 15% 20%;
+    --secondary-foreground: 0 0% 13%;  /* Dark gray for readability */
 
     --muted: 210 20% 94%;
     --muted-foreground: 215 15% 35%;
