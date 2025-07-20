@@ -1,0 +1,208 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Light theme - Soft whites and light grays */
+    --background: 0 0% 98%;
+    --foreground: 220 15% 20%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 15% 20%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 15% 20%;
+
+    --primary: 230 80% 60%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 30% 96%;
+    --secondary-foreground: 220 15% 20%;
+
+    --muted: 210 20% 94%;
+    --muted-foreground: 215 15% 35%;
+
+    --accent: 240 100% 95%;
+    --accent-foreground: 230 80% 60%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 214 20% 90%;
+    --input: 214 20% 90%;
+    --ring: 230 80% 60%;
+
+    --radius: 0.75rem;
+
+    /* Portfolio specific colors */
+    --hero-gradient-start: 230 80% 60%;
+    --hero-gradient-end: 260 70% 70%;
+    --card-hover-shadow: 230 80% 60% / 0.1;
+    --skill-progress: 230 80% 60%;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--hero-gradient-start)), hsl(var(--hero-gradient-end)));
+    --gradient-card: linear-gradient(145deg, hsl(var(--card)) 0%, hsl(var(--accent)) 100%);
+    
+    /* Shadows */
+    --shadow-soft: 0 4px 20px hsl(var(--card-hover-shadow));
+    --shadow-card: 0 2px 10px hsl(230 80% 60% / 0.05);
+    
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    /* Dark theme - Charcoal to navy gradient */
+    --background: 225 25% 8%;
+    --foreground: 210 40% 95%;
+
+    --card: 230 20% 12%;
+    --card-foreground: 210 40% 95%;
+
+    --popover: 230 20% 12%;
+    --popover-foreground: 210 40% 95%;
+
+    --primary: 220 90% 70%;
+    --primary-foreground: 225 25% 8%;
+
+    --secondary: 225 20% 15%;
+    --secondary-foreground: 210 40% 95%;
+
+    --muted: 225 15% 18%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 230 60% 20%;
+    --accent-foreground: 220 90% 70%;
+
+    --destructive: 0 75% 65%;
+    --destructive-foreground: 210 40% 95%;
+
+    --border: 225 15% 20%;
+    --input: 225 15% 20%;
+    --ring: 220 90% 70%;
+
+    /* Portfolio specific dark colors */
+    --hero-gradient-start: 225 25% 8%;
+    --hero-gradient-end: 230 40% 12%;
+    --card-hover-shadow: 220 90% 70% / 0.15;
+    --skill-progress: 220 90% 70%;
+    
+    /* Dark gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--hero-gradient-start)), hsl(var(--hero-gradient-end)));
+    --gradient-card: linear-gradient(145deg, hsl(var(--card)) 0%, hsl(var(--accent)) 100%);
+    
+    /* Dark shadows */
+    --shadow-soft: 0 8px 30px hsl(220 90% 70% / 0.1);
+    --shadow-card: 0 4px 15px hsl(0 0% 0% / 0.3);
+
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    background: var(--gradient-primary);
+    background-attachment: fixed;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--muted));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--primary));
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary) / 0.8);
+  }
+}
+
+@layer components {
+  .hero-button {
+    @apply inline-flex items-center justify-center px-8 py-3 font-medium rounded-full transition-all duration-300 hover:scale-105 hover:shadow-lg;
+  }
+
+  .hero-button-primary {
+    @apply hero-button bg-primary text-primary-foreground hover:bg-primary/90;
+  }
+
+  .hero-button-secondary {
+    @apply hero-button border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground;
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl;
+  }
+
+  .skill-bar {
+    @apply h-2 bg-muted rounded-full overflow-hidden;
+  }
+
+  .skill-progress {
+    @apply h-full bg-primary rounded-full transition-all duration-1000 ease-out;
+  }
+
+  .floating-label {
+    @apply absolute left-3 top-3 text-muted-foreground transition-all duration-200 pointer-events-none;
+  }
+
+  .floating-label-active {
+    @apply -translate-y-6 scale-75 text-primary;
+  }
+
+  .section-padding {
+    @apply py-20 px-4 sm:px-6 lg:px-8;
+  }
+
+  .container-custom {
+    @apply max-w-6xl mx-auto;
+  }
+
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent;
+  }
+
+  .backdrop-blur-card {
+    @apply backdrop-blur-md bg-card/80 border border-border/50;
+  }
+}
